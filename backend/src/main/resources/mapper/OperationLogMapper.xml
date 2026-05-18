@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.classroom.mapper.OperationLogMapper">
+
+    <resultMap id="BaseResultMap" type="com.classroom.entity.OperationLog">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="username" property="username"/>
+        <result column="module" property="module"/>
+        <result column="operation" property="operation"/>
+        <result column="method" property="method"/>
+        <result column="params" property="params"/>
+        <result column="ip" property="ip"/>
+        <result column="duration" property="duration"/>
+        <result column="status" property="status"/>
+        <result column="error_msg" property="errorMsg"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+    <select id="selectList" resultMap="BaseResultMap">
+        SELECT id, user_id, username, module, operation, method, params, ip, duration, status, error_msg, create_time
+        FROM operation_log
+        <where>
+            <if test="keyword != null and keyword != ''">
+                AND (username LIKE CONCAT('%', #{keyword}, '%') 
+                     OR operation LIKE CONCAT('%', #{keyword}, '%'))
+            </if>
+            <if test="module != null and module != ''">
+                AND module = #{module}
+            </if>
+        </where>
+        ORDER BY create_time DESC
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <select id="selectCount" resultType="java.lang.Long">
+        SELECT COUNT(*)
+        FROM operation_log
+        <where>
+            <if test="keyword != null and keyword != ''">
+                AND (username LIKE CONCAT('%', #{keyword}, '%') 
+                     OR operation LIKE CONCAT('%', #{keyword}, '%'))
+            </if>
+            <if test="module != null and module != ''">
+                AND module = #{module}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO operation_log (user_id, username, module, operation, method, params, ip, duration, status, error_msg, create_time)
+        VALUES (#{userId}, #{username}, #{module}, #{operation}, #{method}, #{params}, #{ip}, #{duration}, #{status}, #{errorMsg}, NOW())
+    </insert>
+
+    <delete id="deleteByDays">
+        DELETE FROM operation_log WHERE create_time &lt; DATE_SUB(NOW(), INTERVAL #{days} DAY)
+    </delete>
+
+</mapper>

@@ -1,0 +1,431 @@
+/* 全局样式 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-color: #1890ff;
+  --success-color: #52c41a;
+  --warning-color: #faad14;
+  --error-color: #ff4d4f;
+  --text-color: #333;
+  --text-secondary: #666;
+  --border-color: #d9d9d9;
+  --bg-color: #f0f2f5;
+  --white: #fff;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.12);
+  --radius: 8px;
+  --transition: all 0.3s ease;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 
+               'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+/* 链接样式 */
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+a:hover {
+  color: #40a9ff;
+}
+
+/* 隐藏滚动条但保持功能 */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+/* 卡片样式 */
+.card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 24px;
+  margin-bottom: 20px;
+  transition: var(--transition);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-hover);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+/* 表格样式优化 */
+.layui-table {
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.layui-table th {
+  background: #fafafa !important;
+  font-weight: 600;
+}
+
+.layui-table tr:hover td {
+  background: #f5f7fa !important;
+}
+
+/* 按钮样式优化 */
+.layui-btn {
+  border-radius: 6px;
+  transition: var(--transition);
+  font-weight: 500;
+}
+
+.layui-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.layui-btn-primary {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.layui-btn-primary:hover {
+  background: #40a9ff;
+  border-color: #40a9ff;
+}
+
+/* 输入框样式 */
+.layui-input, .layui-textarea, .layui-select {
+  border-radius: 6px;
+  border-color: var(--border-color);
+  transition: var(--transition);
+}
+
+.layui-input:focus, .layui-textarea:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+}
+
+/* 修复 select 下拉框显示问题 - 统一样式 */
+select.layui-input,
+.toolbar select,
+.toolbar-left select,
+.modal-body select,
+.form-row select,
+.layui-form select {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  background-color: #fff !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M2.5 4.5L6 8l3.5-3.5z'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 10px center !important;
+  background-size: 12px !important;
+  cursor: pointer !important;
+  display: block !important;
+  height: 38px !important;
+  padding-right: 30px !important;
+  border: 1px solid #d9d9d9 !important;
+  border-radius: 6px !important;
+}
+
+select.layui-input:hover,
+.toolbar select:hover,
+.toolbar-left select:hover {
+  border-color: #1890ff !important;
+}
+
+select.layui-input option,
+.toolbar select option,
+.toolbar-left select option,
+.modal-body select option,
+.form-row select option,
+.layui-form select option {
+  padding: 8px 12px !important;
+  background: #fff !important;
+  color: #333 !important;
+}
+
+/* 自定义下拉框样式 */
+.custom-select {
+  width: 100% !important;
+  height: 38px !important;
+  padding: 0 36px 0 12px !important;
+  border: 1px solid #d9d9d9 !important;
+  border-radius: 6px !important;
+  background-color: #fff !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M2.5 4.5L6 8l3.5-3.5z'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 12px center !important;
+  background-size: 12px !important;
+  font-size: 14px !important;
+  color: #333 !important;
+  cursor: pointer !important;
+  display: block !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  transition: all 0.3s ease !important;
+  outline: none !important;
+}
+
+.custom-select:hover {
+  border-color: #1890ff !important;
+}
+
+.custom-select:focus {
+  border-color: #1890ff !important;
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2) !important;
+}
+
+.custom-select:disabled {
+  background-color: #f5f5f5 !important;
+  cursor: not-allowed !important;
+  color: #999 !important;
+}
+
+/* 表单样式 */
+.layui-form-item {
+  margin-bottom: 20px;
+}
+
+.layui-form-label {
+  font-weight: 500;
+}
+
+/* 分页样式 */
+.layui-laypage {
+  padding: 20px 0;
+}
+
+.layui-laypage a, .layui-laypage span {
+  border-radius: 4px !important;
+}
+
+.layui-laypage .layui-laypage-curr .layui-laypage-em {
+  background: var(--primary-color) !important;
+  border-radius: 4px;
+}
+
+/* 工具栏 */
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.toolbar-left, .toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* 搜索框 */
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.search-box .layui-input {
+  width: 200px;
+}
+
+/* 状态标签 */
+.status-tag {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-tag.active {
+  background: #e6f7ff;
+  color: #1890ff;
+}
+
+.status-tag.inactive {
+  background: #fff1f0;
+  color: #ff4d4f;
+}
+
+/* 角色标签 */
+.role-tag {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.role-tag.admin {
+  background: #f9f0ff;
+  color: #722ed1;
+}
+
+.role-tag.teacher {
+  background: #e6fffb;
+  color: #13c2c2;
+}
+
+.role-tag.student {
+  background: #fff7e6;
+  color: #fa8c16;
+}
+
+/* 统计卡片 */
+.stat-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  padding: 24px;
+  color: white;
+  text-align: center;
+  transition: var(--transition);
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.stat-card.blue {
+  background: linear-gradient(135deg, #1890ff 0%, #36cfc9 100%);
+}
+
+.stat-card.green {
+  background: linear-gradient(135deg, #52c41a 0%, #73d13d 100%);
+}
+
+.stat-card.orange {
+  background: linear-gradient(135deg, #fa8c16 0%, #ffc53d 100%);
+}
+
+.stat-card.purple {
+  background: linear-gradient(135deg, #722ed1 0%, #b37feb 100%);
+}
+
+.stat-number {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.stat-label {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+/* 操作按钮组 */
+.action-btns {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.action-btns .layui-btn {
+  padding: 0 12px;
+  height: 28px;
+  line-height: 28px;
+  font-size: 12px;
+}
+
+/* 弹窗样式优化 */
+.layui-layer {
+  border-radius: var(--radius) !important;
+  overflow: hidden;
+}
+
+.layui-layer-title {
+  background: #fafafa !important;
+  border-bottom: 1px solid var(--border-color) !important;
+  font-weight: 600 !important;
+}
+
+.layui-layer-btn {
+  border-top: 1px solid var(--border-color) !important;
+  background: #fafafa !important;
+}
+
+.layui-layer-btn a {
+  border-radius: 6px !important;
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-secondary);
+}
+
+.empty-state i {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.4;
+}
+
+/* 动画 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease;
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .toolbar-left, .toolbar-right {
+    justify-content: center;
+  }
+  
+  .search-box .layui-input {
+    width: 100%;
+  }
+}

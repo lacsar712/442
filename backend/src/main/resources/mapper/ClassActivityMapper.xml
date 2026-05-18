@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.classroom.mapper.ClassActivityMapper">
+
+    <resultMap id="BaseResultMap" type="com.classroom.entity.ClassActivity">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="class_id" property="classId"/>
+        <result column="class_name" property="className"/>
+        <result column="course_id" property="courseId"/>
+        <result column="course_name" property="courseName"/>
+        <result column="creator_id" property="creatorId"/>
+        <result column="creator_name" property="creatorName"/>
+        <result column="activity_type" property="activityType"/>
+        <result column="activity_date" property="activityDate"/>
+        <result column="attachment" property="attachment"/>
+        <result column="attachment_name" property="attachmentName"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        a.id, a.title, a.content, a.class_id, a.course_id, a.creator_id,
+        a.activity_type, a.activity_date, a.attachment, a.attachment_name,
+        a.status, a.create_time, a.update_time
+    </sql>
+
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>, 
+               ci.class_name, co.course_name, u.real_name as creator_name
+        FROM class_activity a
+        LEFT JOIN class_info ci ON a.class_id = ci.id
+        LEFT JOIN course co ON a.course_id = co.id
+        LEFT JOIN sys_user u ON a.creator_id = u.id
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="selectList" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>, 
+               ci.class_name, co.course_name, u.real_name as creator_name
+        FROM class_activity a
+        LEFT JOIN class_info ci ON a.class_id = ci.id
+        LEFT JOIN course co ON a.course_id = co.id
+        LEFT JOIN sys_user u ON a.creator_id = u.id
+        <where>
+            <if test="keyword != null and keyword != ''">
+                AND (a.title LIKE CONCAT('%', #{keyword}, '%') 
+                     OR a.content LIKE CONCAT('%', #{keyword}, '%'))
+            </if>
+            <if test="classId != null">
+                AND a.class_id = #{classId}
+            </if>
+            <if test="courseId != null">
+                AND a.course_id = #{courseId}
+            </if>
+            <if test="activityType != null and activityType != ''">
+                AND a.activity_type = #{activityType}
+            </if>
+            <if test="status != null">
+                AND a.status = #{status}
+            </if>
+        </where>
+        ORDER BY a.activity_date DESC, a.create_time DESC
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <select id="selectCount" resultType="java.lang.Long">
+        SELECT COUNT(*)
+        FROM class_activity a
+        <where>
+            <if test="keyword != null and keyword != ''">
+                AND (a.title LIKE CONCAT('%', #{keyword}, '%') 
+                     OR a.content LIKE CONCAT('%', #{keyword}, '%'))
+            </if>
+            <if test="classId != null">
+                AND a.class_id = #{classId}
+            </if>
+            <if test="courseId != null">
+                AND a.course_id = #{courseId}
+            </if>
+            <if test="activityType != null and activityType != ''">
+                AND a.activity_type = #{activityType}
+            </if>
+            <if test="status != null">
+                AND a.status = #{status}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectRecent" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>, 
+               ci.class_name, co.course_name, u.real_name as creator_name
+        FROM class_activity a
+        LEFT JOIN class_info ci ON a.class_id = ci.id
+        LEFT JOIN course co ON a.course_id = co.id
+        LEFT JOIN sys_user u ON a.creator_id = u.id
+        WHERE a.status = 1
+        ORDER BY a.activity_date DESC
+        LIMIT #{limit}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO class_activity (title, content, class_id, course_id, creator_id, 
+                                   activity_type, activity_date, attachment, attachment_name, 
+                                   status, create_time, update_time)
+        VALUES (#{title}, #{content}, #{classId}, #{courseId}, #{creatorId},
+                #{activityType}, #{activityDate}, #{attachment}, #{attachmentName},
+                #{status}, NOW(), NOW())
+    </insert>
+
+    <update id="update">
+        UPDATE class_activity
+        <set>
+            <if test="title != null">title = #{title},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="classId != null">class_id = #{classId},</if>
+            <if test="courseId != null">course_id = #{courseId},</if>
+            <if test="activityType != null">activity_type = #{activityType},</if>
+            <if test="activityDate != null">activity_date = #{activityDate},</if>
+            <if test="attachment != null">attachment = #{attachment},</if>
+            <if test="attachmentName != null">attachment_name = #{attachmentName},</if>
+            <if test="status != null">status = #{status},</if>
+            update_time = NOW()
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM class_activity WHERE id = #{id}
+    </delete>
+
+</mapper>
